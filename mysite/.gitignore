@@ -1,0 +1,52 @@
+# .gitignore
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg-info/
+*.egg
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.mo
+*.pid
+*.pyo
+*.sqlite3
+
+# Translations
+*.mo
+
+# Django migrations
+*.migrations/
+
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Pyre type checker
+.pyre/
+
+# MyPy
+.mypy_cache/
+dmypy.json
+dmypy.log
+
+# Pycharm
+.idea/
+
+# Environment variables
+.env

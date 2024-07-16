@@ -1,0 +1,323 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluestock | login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .signup-form {
+            width: 100%;
+            max-width: 420px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .logo {
+            width: 230px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 0.625rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-container .toggle-password {
+            position: absolute;
+            right: 0.625rem;
+            top: 50%;
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .password-container .toggle-password i {
+            color: gray;
+        }
+
+        .captcha {
+            display: flex;
+            overflow: hidden;
+            align-items: start;
+            justify-content: start;
+            margin-bottom: 1rem;
+        }
+
+        .google-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 0.625rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
+            background: #e4e7eb;
+        }
+
+        .google-btn img {
+            margin-right: 0.625rem;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .login-btn {
+            background-color: #2451b3;
+            border-color: #2451b3;
+            color: white;
+        }
+
+        .login-btn:hover {
+            background-color: #5686f7;
+            border-color: #5686f7;
+        }
+
+        .divider {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .divider hr {
+            flex: 1;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+
+        .divider span {
+            padding: 0.625rem;
+            font-size: 0.75rem;
+            color: #666;
+            border: solid 1px;
+            border-color: #ccc;
+            background-color: #f2f2f2;
+            border-radius: 0.25rem;
+            box-shadow: 0 0.25rem 0.625rem rgba(138, 138, 138, 0.3);
+        }
+
+        .position-relative .btn-link {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .spinner-border {
+            display: none;
+        }
+
+        @media (max-width: 767px) {
+            .login-form {
+                padding: 1rem;
+            }
+
+            .btn-google .google-logo {
+                width: 16px;
+                height: 16px;
+                margin-right: 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex align-items-center justify-content-center vh-100">
+        <div class="signup-form p-4 shadow rounded">
+            <div class="text-center">
+                <a class="" href="{% url 'home' %}">
+                    <img src="{% static 'assets/logo.png' %}" alt="Bluestock" class="logo mx-auto d-block">
+                </a>
+            </div>
+
+            <form action="" method="post" class="mt-4" id="login-form">{% csrf_token %}
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="" required />
+                </div>
+                <div class="form-group position-relative password-container">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label for="password" class="m-0">Password</label>
+                        <a href="{% url 'forgetpassword' %}">forget password</a>
+                    </div>
+                   
+                    <input type="password" id="password" name="password" placeholder="" required />
+                    <span class="toggle-password" onclick="togglePassword()">
+                        <i class="fa-regular fa-eye"></i>
+                    </span>
+                </div>
+
+                <!-- <div class="g-recaptcha captcha"  data-size="invisible" data-sitekey="6LebfgwqAAAAADiQQIu8tSgLPLubB5h9tr0SQ3Jv"></div> -->
+                <button type="submit" class="btn btn-primary btn-block login-btn p-2" onclick="onSubmit()" id="submit-btn">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    login
+                </button>
+                <div id="message" class="mt-3"></div>
+            </form>
+
+            <div class="divider">
+                <hr />
+                <span>or login with</span>
+                <hr />
+            </div>
+            <a href=""></a><button class="google-btn">
+                <img src="{% static 'assets/google.webp' %}" alt="Google Logo" class="google-logo">
+                Continue with Google
+            </button></a>
+            <a href="{% url 'usersignup' %}" class="d-block text-center mt-3">don't have account? sign-up here</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- <script src="https://www.google.com/recaptcha/api.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            const passwordToggle = document.querySelector(".toggle-password i");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                passwordToggle.classList.remove("fa-eye");
+                passwordToggle.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                passwordToggle.classList.remove("fa-eye-slash");
+                passwordToggle.classList.add("fa-eye");
+            }
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function onSubmit() {
+            const form = document.getElementById("login-form");
+            const email = form.email.value;
+            const password = form.password.value;
+            const csrfToken = getCookie('csrftoken');
+            const messageElement = document.getElementById("message");
+            const spinner = form.querySelector(".spinner-border");
+
+            spinner.style.display = "inline-block";
+
+            const requestData = {
+                email: email,
+                password: password,
+            };
+
+            console.log("Sending data:", requestData);
+
+            fetch("/api/auth/customlogin/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken
+
+                },
+                body: JSON.stringify(requestData)
+            })
+                .then(response => {
+                    spinner.style.display = "none";
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.json().then(errorData => {
+                            throw new Error(JSON.stringify(errorData));
+                        });
+                    }
+                })
+                .then(data => {
+
+
+                    if (data.access_token && data.refresh_token) {
+                        // Store the token in session storage
+                        sessionStorage.setItem('access_token', data.access_token);
+                        sessionStorage.setItem('refresh_token', data.refresh_token);
+                        // Check if the user is an admin and redirect accordingly
+                        if (data.is_admin === true) {
+                             // Redirect to the dashboard
+                            window.location.href = '/admin-dashboard';
+                        } else {
+                             // Redirect to the dashboard
+                            window.location.href = '/user-dashboard';
+                        }
+
+                    } else if (data.detail) {
+                        messageElement.innerHTML = `<div class="alert alert-success">${data.detail}</div>`;
+                    } else {
+                        messageElement.innerHTML = `<div class="alert alert-danger">Error: ${JSON.stringify(data)}</div>`;
+                    }
+                })
+                .catch(error => {
+                    let errorMessage = "An error occurred";
+                    try {
+                        const errorData = JSON.parse(error.message);
+                        if (errorData.email) {
+                            errorMessage = errorData.email.join(", ");
+                        } else if (errorData.username) {
+                            errorMessage = errorData.username.join(", ");
+                        } else if (errorData.non_field_errors) {
+                            errorMessage = errorData.non_field_errors.join(", ");
+                        } else {
+                            errorMessage = errorData.detail || errorMessage;
+                        }
+                    } catch (e) {
+                        // Use the default error message
+                    }
+                    messageElement.innerHTML = `<div class="alert alert-danger">Error: ${errorMessage}</div>`;
+                });
+        }
+
+
+        document.getElementById("login-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+
+</html>
